@@ -1,0 +1,56 @@
+.mainPage{
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.mainTitle{
+    color: white;
+    background-color: #05947C;
+    margin-top: 8px;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+    font-family: monospace;
+    text-align: center;
+}
+
+.addContract{
+    color: white;
+    background-color: #28a745;
+    border: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 100%;
+}
+
+.paddingLeft{
+    padding-left: 25%;
+}
+
+.clDesign{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #05947C;
+    text-decoration: underline;
+    font-size: 
+}
+
+p.clDesign{
+    margin-bottom: 0px;
+}
+
+.acFlex{
+    display: flex;
+    justify-content: space-around;
+}
+
+.listOfContacts{
+    font-size: 14px;
+    font-family: monospace;
+}
