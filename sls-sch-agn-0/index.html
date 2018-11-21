@@ -16,29 +16,42 @@
                 <h1 class="mainTitle">PHONEBOOK</h1>
                 <!-- <button class="addContract">ADD CONTRACT</button>  -->
                 <div class="acFlex">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <button class="addContract" onclick="showHello()">ADD CONTACT</button>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div class="space"></div>
+                    <div class="space"></div>
+                    <button class="addContract" onclick="addNewContact()">ADD CONTACT</button>
+                    <div id="popUpId" class="popUpClass">
+                        <span class="close">&times;</span>
+                        <p class="titleStyle">First Name:</p>
+                        <input class="popupContent" type="text" name="fnName" id="fnId">
+                        <p class="titleStyle">Last Name:</p>
+                        <input class="popupContent" type="text" name="lnName" id="lnId">
+                        <p class="titleStyle">Phone Number:</p>
+                        <input class="popupContent" type="text" name="phnNumName" id="phnId">
+                        <p class="titleStyle">Address:</p>
+                        <input class="popupContent" type="text" name="addrsName" id="addrsId">
+                        <div class="space"></div>
+                        <div class="pubg">
+                            <button class="addContract" onclick="submitInfo()">SUBMIT</button>
+                            <div class="gap2"></div>
+                            <button class="addContract" onclick="cancelClose()">CANCEL</button>
+                        </div>
+                    </div>
+                    <div class="space"></div>
                 </div>
                 
             </div>
             <div class="paddingLeft">
                 <h1 class="clDesign">Contact List</h1>
-                <p class="listOfContacts">Empty!</p>
+                <div id="listOfContacts">
+                </div> 
+            </div>
+            <div class="gap"></div>
+            <div class="pageShuffle">
+                <button class="addContract" onclick="goForward()"><-</button>
+                <button class="addContract" onclick="goBackward()">-></button>
             </div>
             <div class="footer">
-                footer 
+                Assignment 01, Date: November 22, 2018. @SeliseSchool
             </div>
         </div>
         <script src="app.js"></script>
