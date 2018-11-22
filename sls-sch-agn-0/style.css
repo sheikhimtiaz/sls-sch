@@ -26,6 +26,8 @@
     padding: 10px;
     margin-bottom: 0px;
     text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 .space{
@@ -43,6 +45,11 @@
     border-radius: 10px;
     text-align: center;
     font-size: 22px;
+}
+
+.showpagenum{
+    text-align: center;
+    padding-top: 15px;
 }
 
 .popUpClass{
@@ -68,11 +75,13 @@
     font-size: 22px;
 
     text-align: center;
-
+    border-radius: 15px;
     background-color: #fefefe;
     margin: auto;
     border: 1px solid #888;
-    width: 100%;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 
@@ -89,7 +98,7 @@
 }
 
 .paddingLeft{
-    padding-left: 25%;
+    padding-left: 20%;
 }
 
 .clDesign{
@@ -97,7 +106,7 @@
     padding-bottom: 8px;
     color: #05947C;
     text-decoration: underline;
-    font-size: 
+    font-size: 28px;
 }
 
 p.clDesign{
@@ -144,6 +153,28 @@ p.clDesign{
 
 .contactListClass{
     display: flex;
+    justify-content: start;
+    margin-right: 0%;
+
+}
+
+.locClass{
+    display:flex;
+    flex-direction: column;
+}
+
+.mainidclass{
+    display: flex;
     justify-content: space-between;
-    margin-right: 35%;
+    margin-right: 25%;
+}
+
+.btngroupClass{
+    display: flex;
+    justify-content: space-between;
+}
+
+.firstChildClass{
+    display: flex;
+    justify-content: space-between;
 }
