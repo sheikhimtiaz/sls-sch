@@ -20,7 +20,7 @@
                     <div class="space"></div>
                     <button class="addContract" onclick="addNewContact()">ADD CONTACT</button>
                     <div id="popUpId" class="popUpClass">
-                        <span class="close">&times;</span>
+                        <!-- <span class="close" onclick="cancelClose()">&times;</span> -->
                         <p class="titleStyle">First Name:</p>
                         <input class="popupContent" type="text" name="fnName" id="fnId">
                         <p class="titleStyle">Last Name:</p>
@@ -42,13 +42,15 @@
             </div>
             <div class="paddingLeft">
                 <h1 class="clDesign">Contact List</h1>
-                <div id="listOfContacts">
+                <div id="listOfContacts" class="locClass">
                 </div> 
             </div>
             <div class="gap"></div>
             <div class="pageShuffle">
-                <button class="addContract" onclick="goForward()"><-</button>
-                <button class="addContract" onclick="goBackward()">-></button>
+                <button class="addContract" onclick="goBackward()"><-</button>
+                <button class="addContract" onclick="goForward()">-></button>
+            </div>
+            <div id="showPageNumber" class="showpagenum">
             </div>
             <div class="footer">
                 Assignment 01, Date: November 22, 2018. @SeliseSchool
