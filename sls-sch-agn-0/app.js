@@ -99,111 +99,87 @@ var mainObject=JSON.parse(localStorage.getItem("mainObject"));
 
 var currentPage=1;
 
-function buildThePageTwo(){
-    var mainID=document.getElementById('listOfContacts');
-
-    while(mainID.childElementCount > 0 )
-    {
-        mainID.removeChild(mainID.firstChild);
-    }
-
-    var len=mainObject.contactCount;
-    var pushCount=0; 
-    var index=(currentPage-1)*5;
-    while(pushCount<5 && index < mainObject.contactCount){
-        var newChild=document.createElement('div');
-
-        var space=document.createTextNode("0" + (pushCount+1).toString() + ". ");
-        newChild.appendChild(space);
-
-        //var name=document.createTextNode(mainObject.contacts[pushCount].firstName + " " + mainObject.contacts[pushCount].lastName);
-        var name=document.createElement('div');
-        name.innerHTML=mainObject.contacts[index].firstName + " " + mainObject.contacts[index].lastName;
-        name.setAttribute('id',index);
-        newChild.appendChild(name);
-
-        var space2=document.createElement('div');
-        space2.innerHTML="---------------";
-        
-        newChild.appendChild(space2);
-
-        var num=document.createTextNode(mainObject.contacts[index].phoneNumber);
-        newChild.appendChild(num);
-
-        var ubtn=document.createElement('button');
-        ubtn.appendChild(document.createTextNode("U"));
-        ubtn.setAttribute('id','u'+String(index));
-        ubtn.setAttribute('class','addContract');
-        ubtn.onclick = updateInfo(index);
-
-        newChild.appendChild(ubtn);
-
-        var dbtn=document.createElement('button');
-        dbtn.appendChild(document.createTextNode('D'));
-        dbtn.setAttribute('id','d'+String(index));
-        dbtn.setAttribute('class','addContract');
-        dbtn.onclick = deleteInfo(index);
-        newChild.appendChild(dbtn);
-
-        newChild.classList.add('contactListClass');
-
-        mainID.appendChild(newChild);
-
-        index++;
-        pushCount++;
-    }
-    showPNF();
-
-}
-
-function showPNF(){
-    var spn=document.getElementById('showPageNumber');
-
-    while(spn.childElementCount > 0 )
-    {
-        spn.removeChild(spn.firstChild);
-    }
-
-    var pn=document.createElement('div');
-    pn.innerHTML="Page number : " + currentPage;
-    spn.appendChild(pn);
-}
-
-function updateInfo(index){
-    return function(){
-
-    };
-}
-
-function  deleteInfo(index){
-    return function(){
-        var name=mainObject.contacts[index].firstName + " "+mainObject.contacts[index].lastName;
-        var rogerThat=confirm("You want to delete '" + name + "' ?");
-        if(rogerThat== true)
-        {
-            //do it.
-        }
-    }
-}
-
-buildThePage();
-
-function addNewContact(){
-    var getId=document.getElementById('popUpId');
-    getId.style.display = "block";
-}
 var modal=document.getElementById("popUpId");
-// var span=document.getElementsByClassName("close")[0];
 
+// var span=document.getElementsByClassName("close")[0];
 // span.onclick = function() {
 //     modal.style.display = "none";
 // }
+
+// function buildThePageTwo(){
+//     var mainID=document.getElementById('listOfContacts');
+
+//     while(mainID.childElementCount > 0 )
+//     {
+//         mainID.removeChild(mainID.firstChild);
+//     }
+
+//     var len=mainObject.contactCount;
+//     var pushCount=0; 
+//     var index=(currentPage-1)*5;
+//     while(pushCount<5 && index < mainObject.contactCount){
+//         var newChild=document.createElement('div');
+
+//         var space=document.createTextNode("0" + (pushCount+1).toString() + ". ");
+//         newChild.appendChild(space);
+
+//         //var name=document.createTextNode(mainObject.contacts[pushCount].firstName + " " + mainObject.contacts[pushCount].lastName);
+//         var name=document.createElement('div');
+//         name.innerHTML=mainObject.contacts[index].firstName + " " + mainObject.contacts[index].lastName;
+//         name.setAttribute('id',index);
+//         newChild.appendChild(name);
+
+//         var space2=document.createElement('div');
+//         space2.innerHTML="---------------";
+        
+//         newChild.appendChild(space2);
+
+//         var num=document.createTextNode(mainObject.contacts[index].phoneNumber);
+//         newChild.appendChild(num);
+
+//         var ubtn=document.createElement('button');
+//         ubtn.appendChild(document.createTextNode("U"));
+//         ubtn.setAttribute('id','u'+String(index));
+//         ubtn.setAttribute('class','addContract');
+//         ubtn.onclick = updateInfo(index);
+
+//         newChild.appendChild(ubtn);
+
+//         var dbtn=document.createElement('button');
+//         dbtn.appendChild(document.createTextNode('D'));
+//         dbtn.setAttribute('id','d'+String(index));
+//         dbtn.setAttribute('class','addContract');
+//         dbtn.onclick = deleteInfo(index);
+//         newChild.appendChild(dbtn);
+
+//         newChild.classList.add('contactListClass');
+
+//         mainID.appendChild(newChild);
+
+//         index++;
+//         pushCount++;
+//     }
+//     showPNF();
+
+// }
+
 
 function cancelClose(){
     modal.style.display = "none";
 }
 
+function addNewContact(){
+    var getId=document.getElementById('popUpId');
+    getId.style.display = "block";
+    document.getElementById('fnId').value = "";
+    document.getElementById('lnId').value = "";
+    document.getElementById('phnId').value = "";
+    document.getElementById('addrsId').value = "";
+}
+
 function submitInfo(){
+    return function(){
+
     var t1=document.getElementById('fnId').value;
     var t2=document.getElementById('lnId').value;
     var t3=document.getElementById('phnId').value;
@@ -225,24 +201,23 @@ function submitInfo(){
         alert("Please enter a valid address!");
         return;
     }
-
     var tempObj={ 
         firstName: t1,
         lastName: t2,
         phoneNumber: t3,
         address: t4
     };
-
     mainObject.contacts.push(tempObj);
     mainObject.contactCount++;
-    modal.style.display = "none";
     localStorage.setItem('mainObject',JSON.stringify(mainObject));
-    buildThePage();
     
+    modal.style.display = "none";
+    buildThePage();
     document.getElementById('fnId').value = "";
     document.getElementById('lnId').value = "";
     document.getElementById('phnId').value = "";
     document.getElementById('addrsId').value = "";
+    }
 }
 
 function buildThePage(){
@@ -310,7 +285,22 @@ function buildThePage(){
         pushCount++;
     }
     showPNF();
+    
+    var pws=document.getElementById('pws');
+    pws.onclick = submitInfo();
+}
 
+function showPNF(){
+    var spn=document.getElementById('showPageNumber');
+
+    while(spn.childElementCount > 0 )
+    {
+        spn.removeChild(spn.firstChild);
+    }
+
+    var pn=document.createElement('div');
+    pn.innerHTML="Page number : " + currentPage;
+    spn.appendChild(pn);
 }
 
 function goForward(){
@@ -333,5 +323,80 @@ function goBackward(){
     }
 }
 
-
 console.log(mainObject);
+
+buildThePage();
+
+function updateInfo(index){
+    return function(){
+        var getId=document.getElementById('popUpId');
+        getId.style.display = "block";
+
+        document.getElementById('fnId').value = mainObject.contacts[index].firstName;
+        document.getElementById('lnId').value = mainObject.contacts[index].lastName;
+        document.getElementById('phnId').value = mainObject.contacts[index].phoneNumber;
+        document.getElementById('addrsId').value = mainObject.contacts[index].address;
+
+        var pw=document.getElementById('pws');
+        pw.onclick = submitNewInfo(index);
+    };
+}
+
+function submitNewInfo(index){
+    return function(){
+        var t1=document.getElementById('fnId').value;
+        var t2=document.getElementById('lnId').value;
+        var t3=document.getElementById('phnId').value;
+        var t4=document.getElementById('addrsId').value;
+    
+        if(t1==""){
+            alert("Please enter a valid first name!");
+            return;
+        }
+        if(t2==""){
+            alert("Please enter a valid last name!");
+            return;
+        }
+        if(t3=="" || t3.length != 11){
+            alert("Please enter a valid number!");
+            return;
+        }
+        if(t4==""){
+            alert("Please enter a valid address!");
+            return;
+        }
+
+        mainObject.contacts[index].firstName = t1;
+        mainObject.contacts[index].lastName = t2;
+        mainObject.contacts[index].phoneNumber = t3;
+        mainObject.contacts[index].address =  t4;
+        localStorage.setItem('mainObject',JSON.stringify(mainObject));
+        
+        modal.style.display = "none";
+        buildThePage();
+
+        document.getElementById('fnId').value = "";
+        document.getElementById('lnId').value = "";
+        document.getElementById('phnId').value = "";
+        document.getElementById('addrsId').value = "";
+
+        var tv=document.getElementById('pws');
+        tv.onclick = submitInfo();
+
+
+    }
+}
+
+function deleteInfo(index){
+    return function(){
+        var name=mainObject.contacts[index].firstName + " "+mainObject.contacts[index].lastName;
+        var rogerThat=confirm("You want to delete '" + name + "' ?");
+        if(rogerThat == true)
+        {
+            mainObject.contacts.splice(index, 1);
+            mainObject.contactCount--;
+            localStorage.setItem('mainObject',JSON.stringify(mainObject));
+            buildThePage();
+        }
+    }
+}
