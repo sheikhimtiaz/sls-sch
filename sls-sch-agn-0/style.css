@@ -40,12 +40,25 @@
     border: 0px;
     padding-top: 5px;
     padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 22px;
+}
+/* 
+.addContract2{
+    color: white;
+    background-color: #28a745;
+    border: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 2%;
     padding-right: 2%;
     border-radius: 10px;
     text-align: center;
     font-size: 22px;
-}
+} */
 
 .showpagenum{
     text-align: center;
