@@ -1,3 +1,8 @@
+body{
+    background-image: url('img/back.jpg');
+    background-size: cover;
+}
+
 .mainPage{
     display: grid;
     grid-template-columns: 100%;
@@ -34,7 +39,7 @@
     padding-left: 12.5%;
     padding-right: 12.5%;
 }
-.addContract{
+.addTask{
     color: white;
     background-color: #28a745;
     border: 0px;
@@ -121,7 +126,16 @@
     text-decoration: underline;
     font-size: 28px;
 }
+.taskRow{
+    display: flex;
+    justify-content: start;
+}
 
+.taskText{
+    padding-left: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
 p.clDesign{
     margin-bottom: 0px;
 }
@@ -131,7 +145,12 @@ p.clDesign{
     justify-content: space-around;
 }
 
-.listOfContacts{
+.acaBtnGroup{
+    display: flex;
+    justify-content: space-around;
+}
+
+.listOfTasks{
     font-size: 14px;
     font-family: monospace;
 }
