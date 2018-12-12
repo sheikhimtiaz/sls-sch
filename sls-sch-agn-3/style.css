@@ -140,7 +140,7 @@ p.clDesign{
     margin-bottom: 0px;
 }
 
-.acFlex{
+.taskInputButtonRow{
     display: flex;
     justify-content: space-around;
 }

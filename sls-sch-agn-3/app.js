@@ -14,11 +14,21 @@ window.onload = function(){
         ]
     };
     //localStorage.clear();
-    if(localStorage.getItem("mainObject")==null){
-        localStorage.setItem('mainObject',JSON.stringify(initObj));
+
+    var mainObject;
+
+    function getData(){    
+        if(localStorage.getItem("mainObject")==null){
+            localStorage.setItem('mainObject',JSON.stringify(initObj));
+        }
+        mainObject=JSON.parse(localStorage.getItem("mainObject"));
     }
-    
-    var mainObject=JSON.parse(localStorage.getItem("mainObject"));
+
+    function setData(){
+        localStorage.setItem('mainObject',JSON.stringify(mainObject));
+    }
+
+
     var mainBody=document.getElementsByTagName('body')[0];
     mainBody.className = 'mainPage';
 
@@ -31,24 +41,27 @@ window.onload = function(){
         }
     }
 
+    function clearInputField(){
+        var reset=document.getElementById('inputNewTaskId');
+        reset.value="";
+    }
+
     function addNewTask(){
-        var t1=document.getElementById('inputNewTaskId').value;
-        if(t1==""){
+        var taskDescription=document.getElementById('inputNewTaskId').value;
+        if(taskDescription==""){
             alert("Please type a valid task!");
             return;
         }
-        var t2="Active";
-        var tempObj={
-            description: t1,
-            status: t2
+        var initStatus="Active";
+        var newTask={
+            description: taskDescription,
+            status: initStatus
         };
-        mainObject.tasks.push(tempObj);
+        mainObject.tasks.push(newTask);
         mainObject.taskCount++;
-        localStorage.setItem('mainObject',JSON.stringify(mainObject));
-        mainObject=JSON.parse(localStorage.getItem("mainObject"));
-        var reset=document.getElementById('inputNewTaskId');
-        reset.value="";
-        console.log(mainObject);
+        setData();
+        getData();
+        clearInputField();
         loadTasks();
     }
 
@@ -61,33 +74,33 @@ window.onload = function(){
         h1.innerHTML = "TO DO APP";
         header.appendChild(h1);
 
-        var acFlex = document.createElement('div');
-        acFlex.className = 'acFlex';
+        var taskInputButtonRow = document.createElement('div');
+        taskInputButtonRow.className = 'taskInputButtonRow';
 
         var space = document.createElement('div');
         space.className = 'space';
         
-        acFlex.appendChild(space);
+        taskInputButtonRow.appendChild(space);
 
         var input = document.createElement('input');
         input.className = 'iputNewTask';
         input.type = 'text';
         input.id = 'inputNewTaskId';
         input.placeholder = 'type task';
-        acFlex.appendChild(input);
+        taskInputButtonRow.appendChild(input);
 
         var button = document.createElement('button');
         button.onclick = addNewTask;
         button.className = 'addTask';
         button.textContent = "ADD NEW TASK";
-        acFlex.appendChild(button);
+        taskInputButtonRow.appendChild(button);
 
         var space2 = document.createElement('div');
         space2.className = 'space';
         
-        acFlex.appendChild(space2);
+        taskInputButtonRow.appendChild(space2);
 
-        header.appendChild(acFlex);
+        header.appendChild(taskInputButtonRow);
         mainBody.appendChild(header);
     }
     
@@ -152,14 +165,12 @@ window.onload = function(){
     function updateTaskStatus(){
         if(mainObject.tasks[updateTaskIndex].status == 'Active'){
             mainObject.tasks[updateTaskIndex].status = 'Completed';
-            document.getElementById('imgId'+String(updateTaskIndex+1)).style.filter = "grayscale(100%)";
         }
         else{
             mainObject.tasks[updateTaskIndex].status = 'Active';
-            document.getElementById('imgId'+String(updateTaskIndex+1)).style.filter = "grayscale(0%)";
         }
-        localStorage.setItem('mainObject',JSON.stringify(mainObject));
-        mainObject=JSON.parse(localStorage.getItem("mainObject"));
+        setData();
+        getData();
         loadTasks();
     }
 
@@ -288,7 +299,9 @@ window.onload = function(){
         addHeader();
 
         addListOfTasksPart();
-    
+        
+        getData();
+
         loadTheToDoList();
 
         addFooter();
