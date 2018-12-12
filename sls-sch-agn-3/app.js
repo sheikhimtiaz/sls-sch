@@ -174,12 +174,20 @@ window.onload = function(){
             if(loadStatus==0){
                 var tDiv= document.createElement('div');
                 tDiv.className = 'taskRow';
-    
-                var btn = document.createElement('button');
-                btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tick2.png" />';
-                btn.id = 'taskId'+String(index+1);
-                btn.onclick = updateThis(index);
-                tDiv.appendChild(btn);
+                if(mainObject.tasks[index].status == 'Active'){
+                    var btn = document.createElement('button');
+                    btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tick2.png" />';
+                    btn.id = 'taskId'+String(index+1);
+                    btn.onclick = updateThis(index);
+                    tDiv.appendChild(btn);
+                }
+                else{
+                    var btn = document.createElement('button');
+                    btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tickGrey.png" />';
+                    btn.id = 'taskId'+String(index+1);
+                    btn.onclick = updateThis(index);
+                    tDiv.appendChild(btn);
+                }
     
                 var temp = document.createElement('div');
                 temp.innerHTML = mainObject.tasks[index].description;
@@ -194,7 +202,7 @@ window.onload = function(){
                 tDiv.className = 'taskRow';
     
                 var btn = document.createElement('button');
-                btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tick2.png" />';
+                btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tickGrey.png" />';
                 btn.id = 'taskId'+String(index+1);
                 btn.onclick = updateThis(index);
                 tDiv.appendChild(btn);
