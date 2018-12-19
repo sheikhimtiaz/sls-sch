@@ -29,7 +29,6 @@ window.onload = function(){
         localStorage.setItem('mainObject',JSON.stringify(mainObject));
     }
 
-
     var mainBody=document.getElementsByTagName('body')[0];
     mainBody.className = 'mainPage';
 
@@ -99,7 +98,7 @@ window.onload = function(){
         var button = document.createElement('button');
         button.id = "addNewTaskButton";
         button.onclick = addNewTask;
-        button.className = 'addTask';
+        button.className = 'greenButton';
         button.textContent = "ADD NEW TASK";
         taskInputButtonRow.appendChild(button);
 
@@ -114,7 +113,7 @@ window.onload = function(){
     
     function addFooter(){
         var footer = document.createElement('div');
-        footer.innerHTML = "Assignment 03, Date: December 09, 2018. @SeliseSchool";
+        footer.innerHTML = "Assignment 03, Date: December 20, 2018. @SeliseSchool";
         footer.className="footer";
         mainBody.appendChild(footer);
     }
@@ -124,16 +123,16 @@ window.onload = function(){
         paddingLeft.className = 'paddingLeft';
 
         var p=document.createElement('p');
-        p.className = 'clDesign';
+        p.className = 'listHeaderClass';
         p.textContent = 'To Do List';
 
         paddingLeft.appendChild(p);
 
-        var listOfTasks=document.createElement('div');
-        listOfTasks.className = 'locClass';
-        listOfTasks.id = 'listOfTasks';
+        var taskAndStatusButtonSection=document.createElement('div');
+        taskAndStatusButtonSection.className = 'taskAndStatusButtonSectionClass';
+        taskAndStatusButtonSection.id = 'taskAndStatusButtonSection';
 
-        paddingLeft.appendChild(listOfTasks);
+        paddingLeft.appendChild(taskAndStatusButtonSection);
 
         mainBody.appendChild(paddingLeft);
     }
@@ -157,10 +156,10 @@ window.onload = function(){
     }
 
     function clearTaskList(){
-        var tmp=document.getElementById('taskListId');
-        while(tmp.childElementCount > 0 )
+        var taskListFull=document.getElementById('taskListId');
+        while(taskListFull.childElementCount > 0 )
         {
-            tmp.removeChild(tmp.firstChild);
+            taskListFull.removeChild(taskListFull.firstChild);
         }
     }
 
@@ -185,88 +184,215 @@ window.onload = function(){
         loadTasks();
     }
 
+    function setInputFieldToUpdate(index){
+        return function(){
+            var getButton=document.getElementById('addNewTaskButton');
+            getButton.textContent = "Update Task";
+            getButton.onclick = updateTaskInformation(index);
+
+            var getInput=document.getElementById('inputNewTaskId');
+            getInput.value = mainObject.tasks[index].description;
+            getInput.addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    document.getElementById("addNewTaskButton").click();
+                    //updateTaskInformation(index);
+                 }
+            });
+        };
+    }
+
+    function updateTaskInformation(index){
+        return function(){
+            var getInput = document.getElementById('inputNewTaskId');
+            if(getInput.value == ''){
+                alert('Please give a valid input!');
+                return;
+            }
+            mainObject.tasks[index].description = getInput.value;
+            setData();
+            getData();
+            loadTasks();
+
+            var getButton=document.getElementById('addNewTaskButton');
+            getButton.textContent = "ADD NEW TASK";
+            getButton.onclick = addNewTask;
+
+            getInput.value = "";
+            getInput.addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    document.getElementById("addNewTaskButton").click();
+                    //addNewTask();
+                 }
+            });
+        };
+    }
+
+    function deleteTaskInformation(index){
+        return function(){
+            var description=mainObject.tasks[index].description;
+            var rogerThat=confirm("You want to delete '" + description + "' ?");
+            if(rogerThat == true)
+            {
+                mainObject.tasks.splice(index, 1);
+                mainObject.taskCount--;
+                setData();
+                getData();
+                loadTasks();
+            }
+        };
+    }
+
     function loadTasks(){
         clearTaskList();
 
-        var tmp=document.getElementById('taskListId');
+        var taskListFull=document.getElementById('taskListId');
 
         var index=0;
 
         while(index < mainObject.taskCount){
             if(mainObject.loadStatus==0){
-                var tDiv= document.createElement('div');
-                tDiv.className = 'taskRow';
+                var eachTaskRow= document.createElement('li');
+                eachTaskRow.className = 'taskRow';
+
+                var eachTaskRowText = document.createElement('div');
+                eachTaskRowText.className = 'taskRowText';
+
                 if(mainObject.tasks[index].status == 'Active'){
                     var btn = document.createElement('button');
                     btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tick2.png" />';
                     btn.id = 'taskId'+String(index+1);
                     btn.onclick = updateThis(index);
-                    tDiv.appendChild(btn);
+                    eachTaskRowText.appendChild(btn);
                 }
                 else{
                     var btn = document.createElement('button');
                     btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tickGrey.png" />';
                     btn.id = 'taskId'+String(index+1);
                     btn.onclick = updateThis(index);
-                    tDiv.appendChild(btn);
+                    eachTaskRowText.appendChild(btn);
                 }
-    
-                var temp = document.createElement('div');
-                temp.innerHTML = mainObject.tasks[index].description;
-                temp.className = 'taskText';
-                tDiv.appendChild(temp);
-    
-                tmp.appendChild(tDiv);
+
+                var taskText=document.createElement('p');
+                taskText.className = 'taskText';
+                taskText.innerHTML = mainObject.tasks[index].description;
+                eachTaskRowText.appendChild(taskText);
+
+                eachTaskRow.appendChild(eachTaskRowText);
+
+                var taskRowActionButtonGroup=document.createElement('div');
+                taskRowActionButtonGroup.className = 'taskRowActionButtonGroupClass';
+
+                var updateTaskDescription=document.createElement('button');
+                updateTaskDescription.onclick = setInputFieldToUpdate(index) ;
+                updateTaskDescription.textContent = "Update";
+                updateTaskDescription.className = 'greenButton';
+                taskRowActionButtonGroup.appendChild(updateTaskDescription);
+
+                var deleteTaskDescription=document.createElement('button');
+                deleteTaskDescription.onclick = deleteTaskInformation(index) ;
+                deleteTaskDescription.textContent = "Delete";
+                deleteTaskDescription.className = 'greenButton';
+                taskRowActionButtonGroup.appendChild(deleteTaskDescription);
+
+                eachTaskRow.appendChild(taskRowActionButtonGroup);
+
+                taskListFull.appendChild(eachTaskRow);
             }
 
             else if (mainObject.loadStatus==1 && mainObject.tasks[index].status == 'Completed'){
-                var tDiv= document.createElement('div');
-                tDiv.className = 'taskRow';
+                var eachTaskRow= document.createElement('li');
+                eachTaskRow.className = 'taskRow';
+
+                var eachTaskRowText = document.createElement('div');
+                eachTaskRowText.className = 'taskRowText';
     
                 var btn = document.createElement('button');
                 btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tickGrey.png" />';
                 btn.id = 'taskId'+String(index+1);
                 btn.onclick = updateThis(index);
-                tDiv.appendChild(btn);
+                eachTaskRowText.appendChild(btn);
     
-                var temp = document.createElement('div');
-                temp.innerHTML = mainObject.tasks[index].description;
-                temp.className = 'taskText';
-                tDiv.appendChild(temp);
+                var taskText=document.createElement('p');
+                taskText.className = 'taskText';
+                taskText.innerHTML = mainObject.tasks[index].description;
+                eachTaskRowText.appendChild(taskText);
     
-                tmp.appendChild(tDiv);
+                eachTaskRow.appendChild(eachTaskRowText);
+
+                var taskRowActionButtonGroup=document.createElement('div');
+                taskRowActionButtonGroup.className = 'taskRowActionButtonGroupClass';
+
+                var updateTaskDescription=document.createElement('button');
+                updateTaskDescription.onclick = setInputFieldToUpdate(index) ;
+                updateTaskDescription.textContent = "Update";
+                updateTaskDescription.className = 'greenButton';
+                taskRowActionButtonGroup.appendChild(updateTaskDescription);
+
+                var deleteTaskDescription=document.createElement('button');
+                deleteTaskDescription.onclick = deleteTaskInformation(index) ;
+                deleteTaskDescription.textContent = "Delete";
+                deleteTaskDescription.className = 'greenButton';
+                taskRowActionButtonGroup.appendChild(deleteTaskDescription);
+
+                eachTaskRow.appendChild(taskRowActionButtonGroup);
+
+                taskListFull.appendChild(eachTaskRow);
             }
 
             else if (mainObject.loadStatus==2 && mainObject.tasks[index].status == 'Active'){
-                var tDiv= document.createElement('div');
-                tDiv.className = 'taskRow';
+                var eachTaskRow= document.createElement('li');
+                eachTaskRow.className = 'taskRow';
+
+                var eachTaskRowText = document.createElement('div');
+                eachTaskRowText.className = 'taskRowText';
     
                 var btn = document.createElement('button');
                 btn.innerHTML = '<img id="imgId'+String(index+1) +'" src="img/tick2.png" />';
                 btn.id = 'taskId'+String(index+1);
                 btn.onclick = updateThis(index);
-                tDiv.appendChild(btn);
+                eachTaskRowText.appendChild(btn);
     
-                var temp = document.createElement('div');
-                temp.innerHTML = mainObject.tasks[index].description;
-                temp.className = 'taskText';
-                tDiv.appendChild(temp);
+                var taskText=document.createElement('p');
+                taskText.className = 'taskText';
+                taskText.innerHTML = mainObject.tasks[index].description;
+                eachTaskRowText.appendChild(taskText);
     
-                tmp.appendChild(tDiv);
+                eachTaskRow.appendChild(eachTaskRowText);
+
+                var taskRowActionButtonGroup=document.createElement('div');
+                taskRowActionButtonGroup.className = 'taskRowActionButtonGroupClass';
+
+                var updateTaskDescription=document.createElement('button');
+                updateTaskDescription.onclick = setInputFieldToUpdate(index) ;
+                updateTaskDescription.textContent = "Update";
+                updateTaskDescription.className = 'greenButton';
+                taskRowActionButtonGroup.appendChild(updateTaskDescription);
+
+                var deleteTaskDescription=document.createElement('button');
+                deleteTaskDescription.onclick = deleteTaskInformation(index) ;
+                deleteTaskDescription.textContent = "Delete";
+                deleteTaskDescription.className = 'greenButton';
+                taskRowActionButtonGroup.appendChild(deleteTaskDescription);
+
+                eachTaskRow.appendChild(taskRowActionButtonGroup);
+
+                taskListFull.appendChild(eachTaskRow);
             }
             
             index++;
         }
 
-        var tmpFinal = document.getElementById('listOfTasks');
-        tmpFinal.appendChild(tmp);
+        var taskListFullFinal = document.getElementById('taskAndStatusButtonSection');
+        taskListFullFinal.appendChild(taskListFull);
     }
 
     function addStatusButton(){
-        var listOfTasks=document.getElementById('listOfTasks');
+        var taskAndStatusButtonSection=document.getElementById('taskAndStatusButtonSection');
 
         var btnGroup =document.createElement('div');
-        btnGroup.className = 'acaBtnGroup';
+        btnGroup.className = 'statusButtonGroup';
 
         var space = document.createElement('div');
         space.className = 'space';
@@ -275,30 +401,30 @@ window.onload = function(){
         var btnAll = document.createElement('button');
         btnAll.onclick = showAll;
         btnAll.textContent = 'ALL';
-        btnAll.className = 'addTask';
+        btnAll.className = 'greenButton';
         btnGroup.appendChild(btnAll);
 
         var btnCompleted = document.createElement('button');
         btnCompleted.onclick = showCompleted;
         btnCompleted.textContent = 'Completed';
-        btnCompleted.className = 'addTask';
+        btnCompleted.className = 'greenButton';
         btnGroup.appendChild(btnCompleted);
 
         var btnActive = document.createElement('button');
         btnActive.onclick = showActive;
         btnActive.textContent = 'Active';
-        btnActive.className = 'addTask';
+        btnActive.className = 'greenButton';
         btnGroup.appendChild(btnActive);
 
         var space2 = document.createElement('div');
         space2.className = 'space';
         btnGroup.appendChild(space2);
 
-        listOfTasks.appendChild(btnGroup);
+        taskAndStatusButtonSection.appendChild(btnGroup);
         
-        var taskList = document.createElement('div');
+        var taskList = document.createElement('ul');
         taskList.id= 'taskListId';
-        listOfTasks.appendChild(taskList);
+        taskAndStatusButtonSection.appendChild(taskList);
     }
     
     function buildThePage(){
