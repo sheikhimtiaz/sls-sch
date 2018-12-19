@@ -1,6 +1,7 @@
 window.onload = function(){
     var initObj ={
         taskCount : 4,
+        loadStatus : 0,
         tasks : [
             { description: "Eat Some Kacchi",
               status: "Active"},
@@ -32,7 +33,6 @@ window.onload = function(){
     var mainBody=document.getElementsByTagName('body')[0];
     mainBody.className = 'mainPage';
 
-    var loadStatus=0;
     var updateTaskIndex;
     function clearMainBody(){
         while(mainBody.childElementCount > 0 )
@@ -87,9 +87,17 @@ window.onload = function(){
         input.type = 'text';
         input.id = 'inputNewTaskId';
         input.placeholder = 'type task';
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                //document.getElementById("addNewTaskButton").click();
+                addNewTask();
+             }
+        });
         taskInputButtonRow.appendChild(input);
 
         var button = document.createElement('button');
+        button.id = "addNewTaskButton";
         button.onclick = addNewTask;
         button.className = 'addTask';
         button.textContent = "ADD NEW TASK";
@@ -111,7 +119,7 @@ window.onload = function(){
         mainBody.appendChild(footer);
     }
 
-    function addListOfTasksPart(){
+    function addListHeader(){
         var paddingLeft=document.createElement('div');
         paddingLeft.className = 'paddingLeft';
 
@@ -131,18 +139,21 @@ window.onload = function(){
     }
 
     function showAll(){
-        loadStatus=0;
+        mainObject.loadStatus=0;
         loadTasks();
+        setData();
     }
 
     function showCompleted(){
-        loadStatus=1;
+        mainObject.loadStatus=1;
         loadTasks();
+        setData();
     }
 
     function showActive(){
-        loadStatus=2;
+        mainObject.loadStatus=2;
         loadTasks();
+        setData();
     }
 
     function clearTaskList(){
@@ -182,7 +193,7 @@ window.onload = function(){
         var index=0;
 
         while(index < mainObject.taskCount){
-            if(loadStatus==0){
+            if(mainObject.loadStatus==0){
                 var tDiv= document.createElement('div');
                 tDiv.className = 'taskRow';
                 if(mainObject.tasks[index].status == 'Active'){
@@ -208,7 +219,7 @@ window.onload = function(){
                 tmp.appendChild(tDiv);
             }
 
-            else if (loadStatus==1 && mainObject.tasks[index].status == 'Completed'){
+            else if (mainObject.loadStatus==1 && mainObject.tasks[index].status == 'Completed'){
                 var tDiv= document.createElement('div');
                 tDiv.className = 'taskRow';
     
@@ -226,7 +237,7 @@ window.onload = function(){
                 tmp.appendChild(tDiv);
             }
 
-            else if (loadStatus==2 && mainObject.tasks[index].status == 'Active'){
+            else if (mainObject.loadStatus==2 && mainObject.tasks[index].status == 'Active'){
                 var tDiv= document.createElement('div');
                 tDiv.className = 'taskRow';
     
@@ -251,7 +262,7 @@ window.onload = function(){
         tmpFinal.appendChild(tmp);
     }
 
-    function loadTheToDoList(){
+    function addStatusButton(){
         var listOfTasks=document.getElementById('listOfTasks');
 
         var btnGroup =document.createElement('div');
@@ -288,21 +299,21 @@ window.onload = function(){
         var taskList = document.createElement('div');
         taskList.id= 'taskListId';
         listOfTasks.appendChild(taskList);
-
-        loadTasks();
     }
     
     function buildThePage(){
 
         clearMainBody(); 
-
-        addHeader();
-
-        addListOfTasksPart();
         
         getData();
 
-        loadTheToDoList();
+        addHeader();
+
+        addListHeader();
+
+        addStatusButton();
+
+        loadTasks();
 
         addFooter();
     
