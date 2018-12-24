@@ -48,7 +48,7 @@ window.onload = function(){
     function addNewTask(){
         var taskDescription=document.getElementById('inputNewTaskId').value;
         if(taskDescription==""){
-            alert("Please type a valid task!");
+            //alert("Please type a valid task!");
             return;
         }
         var initStatus="Active";
@@ -89,8 +89,8 @@ window.onload = function(){
         input.addEventListener("keyup", function(event) {
             event.preventDefault();
             if (event.keyCode === 13) {
-                //document.getElementById("addNewTaskButton").click();
-                addNewTask();
+                document.getElementById("addNewTaskButton").click();
+                //addNewTask();
              }
         });
         taskInputButtonRow.appendChild(input);
@@ -206,7 +206,7 @@ window.onload = function(){
         return function(){
             var getInput = document.getElementById('inputNewTaskId');
             if(getInput.value == ''){
-                alert('Please give a valid input!');
+                //alert('Please give a valid input!');
                 return;
             }
             mainObject.tasks[index].description = getInput.value;
