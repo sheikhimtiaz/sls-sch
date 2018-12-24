@@ -121,30 +121,24 @@ p.listHeaderClass{
 .pageShuffle > button {
     border-radius: 25px;
 }
-
 .gap{
     margin-top: 20px;
 }
-
 .gap2{
     margin-right: 15px;
 }
-
 .pageShuffle{
     display: flex;
     justify-content: center;
 }
-
 .showpagenum{
     text-align: center;
     padding-top: 15px;
 }
-
 .pubg{
     display: flex;
     justify-content: center;
 }
-
 */
 
 /* .mainidclass{
@@ -176,16 +170,13 @@ p.listHeaderClass{
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 } 
-
 .popUpClass > button{
     position: absolute;
     left: 46.5%;
 }
-
 .popupContent{
     padding: 20px;
     font-size: 22px;
-
     text-align: center;
     border-radius: 15px;
     background-color: #fefefe;
@@ -195,7 +186,6 @@ p.listHeaderClass{
     margin-left: 25%;
     margin-right: 25%;
 } 
-
 .close{
     color: #aaa;
     float: right;
@@ -207,7 +197,6 @@ p.listHeaderClass{
     text-decoration: none;
     cursor: pointer;
 } 
-
 .addContract2{
     color: white;
     background-color: #28a745;
