@@ -1,0 +1,16 @@
+{
+  "name": "sls-sch-agn-4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sheikhimtiaz",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "http": "0.0.0",
+    "request": "^2.88.0"
+  }
+}
